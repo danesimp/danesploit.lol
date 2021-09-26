@@ -139,7 +139,7 @@ local Character = LocalPlayer.Character or LocalPlayer.Character:FindFirstChild(
 
 
 
-local lungeonly = false
+local lungeonly = true
 local instalunge = false
 local script = true
 local dmg = false
@@ -193,7 +193,7 @@ Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Title.BackgroundTransparency = 1.000
 Title.Size = UDim2.new(0, 249, 0, 70)
 Title.Font = Enum.Font.LuckiestGuy
-Title.Text = "danesploit v1.1"
+Title.Text = "danesploit v1.1.0"
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 Title.TextSize = 25.000
 
@@ -370,8 +370,6 @@ game:GetService("UserInputService").InputBegan:connect(function(inp,gameProcesse
 		ScreenGui.Enabled = not ScreenGui.Enabled
 	elseif inp.KeyCode == Enum.KeyCode.E then
         ac = not ac
-	elseif inp.KeyCode == Enum.KeyCode.L then
-	    lungeonly = not lungeonly
 	end
 end)
 
@@ -380,25 +378,25 @@ local function FTI(hit,handle)
     if hum and hit.Parent.Name ~= game.Players.LocalPlayer.Character.Name then
         for i,t in pairs(handle.Parent.Parent:GetChildren()) do
             if t:IsA("Part") then
-                if hum.Health > 0 then
+                if t:FindFirstChildOfClass("TouchTransmitter") then
                     if dmg then
                         if lungeonly then
                             if handle.Parent.GripUp ~= Vector3.new(-1,0,0) then return end
                             for i,v in pairs(hit.Parent:GetChildren()) do
                                 if v:IsA("Part") then
                                     firetouchinterest(v,t,0)
-                                    firetouchinterest(v,t,1)
+                	                firetouchinterest(v,t,1)
                                     firetouchinterest(v,handle,0)
-                                    firetouchinterest(v,handle,1)
+                	                firetouchinterest(v,handle,1)
                                 end
                             end
                         else
                             for i,v in pairs(hit.Parent:GetChildren()) do
                                 if v:IsA("Part") then
                                     firetouchinterest(v,t,0)
-                                    firetouchinterest(v,t,1)
+                	                firetouchinterest(v,t,1)
                                     firetouchinterest(v,handle,0)
-                                    firetouchinterest(v,handle,1)
+                	                firetouchinterest(v,handle,1)
                                 end
                             end
                         end
@@ -408,29 +406,29 @@ local function FTI(hit,handle)
                             local LArm = hit.Parent:FindFirstChild("Left Arm")
                             if LArm then
                                 firetouchinterest(LArm,t,0)
-                                firetouchinterest(LArm,t,1)
+                    	        firetouchinterest(LArm,t,1)
                                 firetouchinterest(LArm,handle,0)
-                                firetouchinterest(LArm,handle,1)
-                            else
-                                firetouchinterest(hit,t,0)
-                                firetouchinterest(hit,t,1)
-                                firetouchinterest(hit,handle,0)
-                                firetouchinterest(hit,handle,1)
-                            end
+                    	        firetouchinterest(LArm,handle,1)
+                    	    else
+                    	        firetouchinterest(hit,t,0)
+                	            firetouchinterest(hit,t,1)
+                    	        firetouchinterest(hit,handle,0)
+                	            firetouchinterest(hit,handle,1)
+                    	    end
                         else
                             local LArm = hit.Parent:FindFirstChild("Left Arm")
                             if LArm then
                                 firetouchinterest(LArm,t,0)
-                                firetouchinterest(LArm,t,1)
+                    	        firetouchinterest(LArm,t,1)
                                 firetouchinterest(LArm,handle,0)
-                                firetouchinterest(LArm,handle,1)
-                            else
-                                firetouchinterest(hit,t,0)
-                                firetouchinterest(hit,t,1)
-                                firetouchinterest(hit,handle,0)
-                                firetouchinterest(hit,handle,1)
-                            end
-                        end
+                    	        firetouchinterest(LArm,handle,1)
+                    	    else
+                    	        firetouchinterest(hit,t,0)
+                	            firetouchinterest(hit,t,1)
+                    	        firetouchinterest(hit,handle,0)
+                	            firetouchinterest(hit,handle,1)
+                    	    end
+                    	end
                     end
                 end
             end
