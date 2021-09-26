@@ -193,7 +193,7 @@ Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Title.BackgroundTransparency = 1.000
 Title.Size = UDim2.new(0, 249, 0, 70)
 Title.Font = Enum.Font.GrenzeGotisch
-Title.Text = "danesploit v1.1.2"
+Title.Text = "danesploit v1.1.3"
 Title.TextColor3 = Color3.fromRGB(50, 0, 255)
 Title.TextSize = 40.000
 
