@@ -149,8 +149,8 @@ local typing = false
 local chatbar = game:GetService("Players").LocalPlayer.PlayerGui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar
 
 local visualizer = Instance.new("Part")
-visualizer.BrickColor = BrickColor.Yellow()
-visualizer.Transparency = 0
+visualizer.BrickColor = BrickColor.Blue()
+visualizer.Transparency = 0.1
 visualizer.Anchored = true
 visualizer.CanCollide = false
 visualizer.Size = Vector3.new(0.5,0.5,0.5)
@@ -267,7 +267,7 @@ Damage.TextSize = 40.000
 
 Frame_2.Parent = Damage
 Frame_2.AnchorPoint = Vector2.new(0.5, 0.5)
-Frame_2.BackgroundColor3 = Color3.fromRGB(150, 0, 255)
+Frame_2.BackgroundColor3 = Color3.fromRGB(50, 0, 255)
 Frame_2.BorderSizePixel = 0
 Frame_2.Position = UDim2.new(0.5, 0, 0.5, 0)
 
@@ -286,7 +286,7 @@ Visualizer.TextSize = 40.000
 
 Frame_3.Parent = Visualizer
 Frame_3.AnchorPoint = Vector2.new(0.5, 0.5)
-Frame_3.BackgroundColor3 = Color3.fromRGB(150, 0, 255)
+Frame_3.BackgroundColor3 = Color3.fromRGB(50, 0, 255)
 Frame_3.BorderSizePixel = 0
 Frame_3.Position = UDim2.new(0.5, 0, 0.5, 0)
 
