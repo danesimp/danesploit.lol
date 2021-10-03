@@ -214,8 +214,8 @@ Bubble.Rotation = NumberRange.new(-180, 180)
 Bubble.Parent = Attachment
 ---------------------------------------
 game.StarterGui:SetCore("SendNotification", {
-    Title = "Danesploit Loaded.";
-    Text = "Version up to date";
+    Title = "Danesploit 1.2.4 Loaded.";
+    Text = "Version up to date!";
     Duration = 5;
 })
 
