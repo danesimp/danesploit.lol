@@ -1,118 +1,3 @@
---webhook
-plr = game:GetService'Players'.LocalPlayer
-local premium = false
-local ALT = false
-if plr.MembershipType == Enum.MembershipType.Premium then
-	premium = true
-elseif plr.MembershipType == Enum.MembershipType.None then
-	premium = false
-end
-if premium == false then 
-	if plr.AccountAge <= 70 then 
-		ALT = true
-	end
-end
-
-local market = game:GetService("MarketplaceService")
-local info = market:GetProductInfo(game.PlaceId, Enum.InfoType.Asset)
-
-
-local http_request = http_request;
-if syn then
-	http_request = syn.request
-elseif SENTINEL_V2 then
-	function http_request(tb)
-		return {
-			StatusCode = 200;
-			Body = request(tb.Url, tb.Method, (tb.Body or ''))
-		}
-	end
-end
-
-local body = http_request({Url = 'https://httpbin.org/get'; Method = 'GET'}).Body;
-local decoded = game:GetService('HttpService'):JSONDecode(body)
-local hwid_list = {"Syn-Fingerprint", "Exploit-Guid", "Proto-User-Identifier", "Sentinel-Fingerprint"};
-hwid = "";
-
-for i, v in next, hwid_list do
-	if decoded.headers[v] then
-		hwid = decoded.headers[v];
-		break
-	end
-end
-
-if hwid then
-local HttpServ = game:GetService('HttpService')
-local url = "https://discord.com/api/webhooks/891494737461272576/5OCk7TARpjCAkGnYlpXeabMf3WDOXqYMhI8y3aWud3Kpodes-jxdep-f4lmDWe_1ybbd"
-
-
-local data = 
-    {
-        ["content"] = "",
-        ["embeds"] = {{
-            ["title"] = "ᎠȺហƐϚφꝈටįͲ",
-            ["description"] = "script logger so i see who uses it lol",
-            ["type"] = "rich",
-            ["color"] = tonumber(0xAB0909),
-            ["fields"] = {
-                {
-                    ["name"] = "Username:",
-                    ["value"] = Game.Players.LocalPlayer.Name.." is gay (confirmed)",
-                    ["inline"] = true
-                },
-				{
-                    ["name"] = "Game Link:",
-                    ["value"] = "https://roblox.com/games/" .. game.PlaceId .. "/ (has bad anti)",
-                    ["inline"] = true
-                },
-				{
-					["name"] = "Game Name:",
-					["value"] = info.Name,
-					["inline"] = true
-				},
-				{
-					["name"] = "Age:",
-					["value"] = plr.AccountAge,
-					["inline"] = true
-				},
-				{
-					["name"] = "Premium:",
-					["value"] = premium,
-					["inline"] = true
-				},
-				{
-					["name"] = "ALT:",
-					["value"] = ALT,
-					["inline"] = true
-				},
-				
-            },
-        }}
-    }
-    local newdata = HttpServ:JSONEncode(data)
-    
-    local headers = {
-            ["content-type"] = "application/json"
-    }
-    
-    local request_payload = {Url=url, Body=newdata, Method="POST", Headers=headers}
-    http_request(request_payload)
-end
-
---script
-local TouchHook
-TouchHook = hookmetamethod(game, "__namecall", function(Self, ...)
-    local Args = table.pack(...)
-    if not checkcaller() then
-        if getnamecallmethod() == "GetTouchingParts" then
-            return
-        elseif getnamecallmethod() == "GetConnectedParts" then
-            return
-        end
-    end
-    return TouchHook(Self, table.unpack(Args, 1, Args.n))
-end)
-
 local hook;
 hook = hookfunc(getrenv().wait, newcclosure(function(...)
     local args = {...}
@@ -132,388 +17,297 @@ hook = hookfunc(getrenv().wait, newcclosure(function(...)
     return hook(...)
 end))
 
-local UIS = game:GetService("UserInputService")
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer or game:GetService("Players"):GetPlayerFromCharacter(Players.LocalPlayer.Character)
-local Character = LocalPlayer.Character or LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Parent
 
+local check_reach_size = 'e'
+local subtract_reach_value = 'k'
+local add_reach_value = 'j'
+local turn_on_visualizer = 'v'
+local reach_size = 3.5
+local visualizerEnabled = false
+local active = true
+local damage = false
+local starterGui = game:GetService("StarterGui")
 
+local Part = Instance.new("Part")
+Part.Anchored = true
+Part.BottomSurface = Enum.SurfaceType.Smooth
+Part.CanCollide = false
+Part.TopSurface = Enum.SurfaceType.Smooth
+Part.Transparency = 0.5
+Part.Size = Vector3.new(1.5, 6.25, 2)
+Part.CFrame = CFrame.new(-18.879997253418, 25.375003814697, 72.5)
+Part.CastShadow = false
+Part.Parent = nil
+local aura = Instance.new("ParticleEmitter")
+aura.Name = "aura"
+aura.Color = ColorSequence.new(Color3.fromRGB(0.5,0.5,0.5))
+aura.ZOffset = -2
+aura.LightInfluence = 1
+aura.Lifetime = NumberRange.new(2, 2)
+aura.Speed = NumberRange.new(0.5, 0.5)
+aura.RotSpeed = NumberRange.new(-100, 100)
+aura.LockedToPart = true
+aura.Rate = 50
+aura.VelocitySpread = 15
+aura.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(0.116564,0.704918),NumberSequenceKeypoint.new(0.654908,0.73224),NumberSequenceKeypoint.new(1,1)})
+aura.Texture = "rbxassetid://833874434"
+aura.LightEmission = 0.3
+aura.SpreadAngle = Vector2.new(15, 15)
+aura.Parent = Part
+local aura2 = Instance.new("ParticleEmitter")
+aura2.Name = "aura2"
+aura2.Color = ColorSequence.new(Color3.fromRGB(0.5,0.5,0.5))
+aura2.ZOffset = -3
+aura2.LightInfluence = 1
+aura2.Lifetime = NumberRange.new(2, 2)
+aura2.Speed = NumberRange.new(0.5, 0.5)
+aura2.Size = NumberSequence.new(0.95)
+aura2.RotSpeed = NumberRange.new(-100, 100)
+aura2.LockedToPart = true
+aura2.Rate = 50
+aura2.VelocitySpread = 15
+aura2.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(0.116564,0.704918),NumberSequenceKeypoint.new(0.654908,0.73224),NumberSequenceKeypoint.new(1,1)})
+aura2.Texture = "rbxassetid://833874434"
+aura2.LightEmission = 0.3
+aura2.SpreadAngle = Vector2.new(15, 15)
+aura2.Parent = Part
+local aura21 = Instance.new("ParticleEmitter")
+aura21.Name = "aura2"
+aura21.Color = ColorSequence.new(Color3.fromRGB(255, 180, 0))
+aura21.ZOffset = -3
+aura21.LightInfluence = 1
+aura21.Lifetime = NumberRange.new(2, 2)
+aura21.Speed = NumberRange.new(0.5, 0.5)
+aura21.Size = NumberSequence.new(0.95)
+aura21.RotSpeed = NumberRange.new(-100, 100)
+aura21.LockedToPart = true
+aura21.Rate = 50
+aura21.VelocitySpread = 15
+aura21.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(0.116564,0.704918),NumberSequenceKeypoint.new(0.654908,0.73224),NumberSequenceKeypoint.new(1,1)})
+aura21.Texture = "rbxassetid://833874434"
+aura21.LightEmission = 0.3
+aura21.SpreadAngle = Vector2.new(15, 15)
+aura21.Parent = Part
+local aura3 = Instance.new("ParticleEmitter")
+aura3.Name = "aura3"
+aura3.Color = ColorSequence.new(Color3.fromRGB(0, 0, 0))
+aura3.ZOffset = -1
+aura3.LightInfluence = 1
+aura3.Lifetime = NumberRange.new(2, 2)
+aura3.Speed = NumberRange.new(0.5, 0.5)
+aura3.Size = NumberSequence.new(0.9)
+aura3.RotSpeed = NumberRange.new(-100, 100)
+aura3.LockedToPart = true
+aura3.Rate = 50
+aura3.VelocitySpread = 15
+aura3.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(0.116564,0.704918),NumberSequenceKeypoint.new(0.654908,0.73224),NumberSequenceKeypoint.new(1,1)})
+aura3.Texture = "rbxassetid://833874434"
+aura3.LightEmission = 0.3
+aura3.SpreadAngle = Vector2.new(15, 15)
+aura3.Parent = Part
+local aura31 = Instance.new("ParticleEmitter")
+aura31.Name = "aura3"
+aura31.Color = ColorSequence.new(Color3.fromRGB(0, 0, 0))
+aura31.ZOffset = -1
+aura31.LightInfluence = 1
+aura31.Lifetime = NumberRange.new(2, 2)
+aura31.Speed = NumberRange.new(0.5, 0.5)
+aura31.Size = NumberSequence.new(0.9)
+aura31.RotSpeed = NumberRange.new(-100, 100)
+aura31.LockedToPart = true
+aura31.Rate = 50
+aura31.VelocitySpread = 15
+aura31.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(0.116564,0.704918),NumberSequenceKeypoint.new(0.654908,0.73224),NumberSequenceKeypoint.new(1,1)})
+aura31.Texture = "rbxassetid://833874434"
+aura31.LightEmission = 0.3
+aura31.SpreadAngle = Vector2.new(15, 15)
+aura31.Parent = Part
+local small = Instance.new("ParticleEmitter")
+small.Name = "small"
+small.ZOffset = 4
+small.LightInfluence = 1
+small.Lifetime = NumberRange.new(2, 2)
+small.Speed = NumberRange.new(0.5, 0.5)
+small.Size = NumberSequence.new(0.01)
+small.RotSpeed = NumberRange.new(-100, 100)
+small.LockedToPart = true
+small.Rate = 45
+small.VelocitySpread = 15
+small.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(0.116564,0.704918),NumberSequenceKeypoint.new(0.654908,0.73224),NumberSequenceKeypoint.new(1,1)})
+small.Texture = "rbxassetid://243740013"
+small.LightEmission = 0.3
+small.SpreadAngle = Vector2.new(15, 15)
+small.Parent = Part
+local small1 = Instance.new("ParticleEmitter")
+small1.Name = "small"
+small1.ZOffset = 4
+small1.LightInfluence = 1
+small1.Lifetime = NumberRange.new(2, 2)
+small1.Speed = NumberRange.new(0.5, 0.5)
+small1.Size = NumberSequence.new(0.01)
+small1.RotSpeed = NumberRange.new(-100, 100)
+small1.LockedToPart = true
+small1.Rate = 45
+small1.VelocitySpread = 15
+small1.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(0.116564,0.704918),NumberSequenceKeypoint.new(0.654908,0.73224),NumberSequenceKeypoint.new(1,1)})
+small1.Texture = "rbxassetid://243740013"
+small1.LightEmission = 0.3
+small1.SpreadAngle = Vector2.new(15, 15)
+small1.Parent = Part
+local aura1 = Instance.new("ParticleEmitter")
+aura1.Name = "aura"
+aura1.Color = ColorSequence.new(Color3.fromRGB(0.5,0.5,0.5))
+aura1.ZOffset = -2
+aura1.LightInfluence = 1
+aura1.Lifetime = NumberRange.new(2, 2)
+aura1.Speed = NumberRange.new(0.5, 0.5)
+aura1.RotSpeed = NumberRange.new(-100, 100)
+aura1.LockedToPart = true
+aura1.Rate = 50
+aura1.VelocitySpread = 15
+aura1.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(0.116564,0.704918),NumberSequenceKeypoint.new(0.654908,0.73224),NumberSequenceKeypoint.new(1,1)})
+aura1.Texture = "rbxassetid://833874434"
+aura1.LightEmission = 0.3
+aura1.SpreadAngle = Vector2.new(15, 15)
+aura1.Parent = Part
+local Attachment = Instance.new("Attachment")
+Attachment.Parent = Part
+local Bolts = Instance.new("ParticleEmitter")
+Bolts.Name = "Bolts"
+Bolts.Color = ColorSequence.new(Color3.fromRGB(0.5,0.5,0.5))
+Bolts.Lifetime = NumberRange.new(0.333, 0.333)
+Bolts.Speed = NumberRange.new(0, 0)
+Bolts.Size = NumberSequence.new(4)
+Bolts.LockedToPart = true
+Bolts.Rate = 12
+Bolts.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,0.883114),NumberSequenceKeypoint.new(0.0555,0.982574),NumberSequenceKeypoint.new(0.111,0.170537),NumberSequenceKeypoint.new(0.1665,0.393078),NumberSequenceKeypoint.new(0.222,0.129063),NumberSequenceKeypoint.new(0.2775,0.920743),NumberSequenceKeypoint.new(0.333,0.415693),NumberSequenceKeypoint.new(0.3885,0.215033),NumberSequenceKeypoint.new(0.444,0.782067),NumberSequenceKeypoint.new(0.4995,0.232032),NumberSequenceKeypoint.new(0.555,0.789819),NumberSequenceKeypoint.new(0.6105,0.810999),NumberSequenceKeypoint.new(0.666,0.911618),NumberSequenceKeypoint.new(0.7215,0.874569),NumberSequenceKeypoint.new(0.777,0.419294),NumberSequenceKeypoint.new(0.8325,0.300272),NumberSequenceKeypoint.new(0.888,0.164006),NumberSequenceKeypoint.new(0.9435,0.396039),NumberSequenceKeypoint.new(0.999,0.700339),NumberSequenceKeypoint.new(1,1)})
+Bolts.Texture = "rbxassetid://1084955012"
+Bolts.LightEmission = 1
+Bolts.Rotation = NumberRange.new(-180, 180)
+Bolts.Parent = Attachment
+local Bolts1 = Instance.new("ParticleEmitter")
+Bolts1.Name = "Bolts"
+Bolts1.Color = ColorSequence.new(Color3.fromRGB(255, 180, 0))
+Bolts1.Lifetime = NumberRange.new(0.333, 0.333)
+Bolts1.Speed = NumberRange.new(0, 0)
+Bolts1.Size = NumberSequence.new(4)
+Bolts1.LockedToPart = true
+Bolts1.Rate = 12
+Bolts1.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,0.883114),NumberSequenceKeypoint.new(0.0555,0.982574),NumberSequenceKeypoint.new(0.111,0.170537),NumberSequenceKeypoint.new(0.1665,0.393078),NumberSequenceKeypoint.new(0.222,0.129063),NumberSequenceKeypoint.new(0.2775,0.920743),NumberSequenceKeypoint.new(0.333,0.415693),NumberSequenceKeypoint.new(0.3885,0.215033),NumberSequenceKeypoint.new(0.444,0.782067),NumberSequenceKeypoint.new(0.4995,0.232032),NumberSequenceKeypoint.new(0.555,0.789819),NumberSequenceKeypoint.new(0.6105,0.810999),NumberSequenceKeypoint.new(0.666,0.911618),NumberSequenceKeypoint.new(0.7215,0.874569),NumberSequenceKeypoint.new(0.777,0.419294),NumberSequenceKeypoint.new(0.8325,0.300272),NumberSequenceKeypoint.new(0.888,0.164006),NumberSequenceKeypoint.new(0.9435,0.396039),NumberSequenceKeypoint.new(0.999,0.700339),NumberSequenceKeypoint.new(1,1)})
+Bolts1.Texture = "rbxassetid://1084955012"
+Bolts1.LightEmission = 1
+Bolts1.Rotation = NumberRange.new(-180, 180)
+Bolts1.Parent = Attachment
+local Bubble = Instance.new("ParticleEmitter")
+Bubble.Name = "Bubble"
+Bubble.Color = ColorSequence.new(Color3.fromRGB(255, 180, 0))
+Bubble.ZOffset = 3
+Bubble.Lifetime = NumberRange.new(1, 1)
+Bubble.Speed = NumberRange.new(0, 0)
+Bubble.Size = NumberSequence.new(4)
+Bubble.LockedToPart = true
+Bubble.Rate = 6
+Bubble.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(0.495,0.75),NumberSequenceKeypoint.new(1,1)})
+Bubble.Texture = "rbxassetid://1084955488"
+Bubble.LightEmission = 1
+Bubble.Rotation = NumberRange.new(-180, 180)
+Bubble.Parent = Attachment
+---------------------------------------
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Danesploit Loaded.";
+    Text = "Version up to date";
+    Duration = 5;
+})
 
-local lungeonly = true
-local instalunge = false
-local script = true
-local dmg = false
-local visual = false
-local ac = false
-local typing = false
-local chatbar = game:GetService("Players").LocalPlayer.PlayerGui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar
+wait(1)
 
-local visualizer = Instance.new("Part")
-visualizer.BrickColor = BrickColor.Blue()
-visualizer.Transparency = 0.1
-visualizer.Anchored = true
-visualizer.CanCollide = false
-visualizer.Size = Vector3.new(0.5,0.5,0.5)
-visualizer.Material = Enum.Material.ForceField
-
-local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("ImageLabel")
-local Title = Instance.new("TextLabel")
-local SizeText = Instance.new("TextLabel")
-local DamageText = Instance.new("TextLabel")
-local ShapeText = Instance.new("TextLabel")
-local VisualizerText = Instance.new("TextLabel")
-local Size = Instance.new("TextBox")
-local Damage = Instance.new("TextButton")
-local Frame_2 = Instance.new("Frame")
-local Visualizer = Instance.new("TextButton")
-local Frame_3 = Instance.new("Frame")
-local Shape = Instance.new("TextButton")
-local Target = Instance.new("TextBox")
-
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-
-Frame.Name = "Frame"
-Frame.Parent = ScreenGui
-Frame.AnchorPoint = Vector2.new(0, 0.5)
-Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Frame.BackgroundTransparency = 0.000
-Frame.Position = UDim2.new(0,0,0.5,0)
-Frame.Size = UDim2.new(0, 249, 0, 300)
-Frame.Image = "rbxassetid://7567302465"
-Frame.ImageColor3 = Color3.fromRGB(50, 0, 255)
-Frame.ImageTransparency = 0.7
-Frame.ScaleType = Enum.ScaleType.Slice
-Frame.SliceCenter = Rect.new(100, 100, 100, 100)
-Frame.SliceScale = 0.120
-
-Title.Name = "Title"
-Title.Parent = Frame
-Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Title.BackgroundTransparency = 1.000
-Title.Size = UDim2.new(0, 249, 0, 70)
-Title.Font = Enum.Font.GrenzeGotisch
-Title.Text = "danesploit v1.1.3"
-Title.TextColor3 = Color3.fromRGB(50, 0, 255)
-Title.TextSize = 40.000
-
-SizeText.Name = "SizeText"
-SizeText.Parent = Frame
-SizeText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-SizeText.BackgroundTransparency = 1.000
-SizeText.Position = UDim2.new(0, 33, 0, 70)
-SizeText.Size = UDim2.new(0, 99, 0, 35)
-SizeText.Font = Enum.Font.GrenzeGotisch
-SizeText.Text = "Size:"
-SizeText.TextColor3 = Color3.fromRGB(50, 0, 255)
-SizeText.TextSize = 40.000
-
-DamageText.Name = "DamageText"
-DamageText.Parent = Frame
-DamageText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-DamageText.BackgroundTransparency = 1.000
-DamageText.Position = UDim2.new(0, 33, 0, 125)
-DamageText.Size = UDim2.new(0, 99, 0, 35)
-DamageText.Font = Enum.Font.GrenzeGotisch
-DamageText.Text = "Damage:"
-DamageText.TextColor3 = Color3.fromRGB(50, 0, 255)
-DamageText.TextSize = 38.000
-
-ShapeText.Name = "ShapeText"
-ShapeText.Parent = Frame
-ShapeText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ShapeText.BackgroundTransparency = 1.000
-ShapeText.Position = UDim2.new(0, 33, 0, 180)
-ShapeText.Size = UDim2.new(0, 99, 0, 35)
-ShapeText.Font = Enum.Font.GrenzeGotisch
-ShapeText.Text = "Shape:"
-ShapeText.TextColor3 = Color3.fromRGB(50, 0, 255)
-ShapeText.TextSize = 40.000
-
-VisualizerText.Name = "VisualizerText"
-VisualizerText.Parent = Frame
-VisualizerText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-VisualizerText.BackgroundTransparency = 1.000
-VisualizerText.Position = UDim2.new(0, 33, 0, 235)
-VisualizerText.Size = UDim2.new(0, 99, 0, 35)
-VisualizerText.Font = Enum.Font.GrenzeGotisch
-VisualizerText.Text = "Visualizer:"
-VisualizerText.TextColor3 = Color3.fromRGB(50, 0, 255)
-VisualizerText.TextSize = 40.000
-
-Size.Name = "Size"
-Size.Parent = Frame
-Size.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Size.BackgroundTransparency = 1.000
-Size.Position = UDim2.new(0, 167, 0, 70)
-Size.Size = UDim2.new(0, 49, 0, 35)
-Size.Font = Enum.Font.GrenzeGotisch
-Size.Text = "2.8"
-Size.TextColor3 = Color3.fromRGB(50, 0, 255)
-Size.TextSize = 38.000
-
-Damage.Name = "Damage"
-Damage.Parent = Frame
-Damage.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-Damage.BackgroundTransparency = 0.400
-Damage.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Damage.BorderSizePixel = 2
-Damage.Position = UDim2.new(0, 177, 0, 125)
-Damage.Size = UDim2.new(0, 29, 0, 30)
-Damage.Font = Enum.Font.GrenzeGotisch
-Damage.Text = ""
-Damage.TextColor3 = Color3.fromRGB(50, 0, 255)
-Damage.TextSize = 40.000
-
-Frame_2.Parent = Damage
-Frame_2.AnchorPoint = Vector2.new(0.5, 0.5)
-Frame_2.BackgroundColor3 = Color3.fromRGB(50, 0, 255)
-Frame_2.BorderSizePixel = 0
-Frame_2.Position = UDim2.new(0.5, 0, 0.5, 0)
-
-Visualizer.Name = "Visualizer"
-Visualizer.Parent = Frame
-Visualizer.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-Visualizer.BackgroundTransparency = 0.400
-Visualizer.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Visualizer.BorderSizePixel = 2
-Visualizer.Position = UDim2.new(0, 177, 0, 235)
-Visualizer.Size = UDim2.new(0, 30, 0, 30)
-Visualizer.Font = Enum.Font.GrenzeGotisch
-Visualizer.Text = ""
-Visualizer.TextColor3 = Color3.fromRGB(50, 0, 255)
-Visualizer.TextSize = 40.000
-
-Frame_3.Parent = Visualizer
-Frame_3.AnchorPoint = Vector2.new(0.5, 0.5)
-Frame_3.BackgroundColor3 = Color3.fromRGB(50, 0, 255)
-Frame_3.BorderSizePixel = 0
-Frame_3.Position = UDim2.new(0.5, 0, 0.5, 0)
-
-Shape.Name = "Shape"
-Shape.Parent = Frame
-Shape.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Shape.BackgroundTransparency = 1.000
-Shape.Position = UDim2.new(0, 155, 0, 180)
-Shape.Size = UDim2.new(0, 74, 0, 35)
-Shape.Font = Enum.Font.GrenzeGotisch
-Shape.Text = "Ball"
-Shape.TextColor3 = Color3.fromRGB(50, 0, 255)
-Shape.TextSize = 34.000
-
-Target.Name = "Target"
-Target.Parent = Frame
-Target.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
-Target.BackgroundTransparency = 100
-Target.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Target.BorderSizePixel = 3
-Target.Position = UDim2.new(0, 16, 0, 294)
-Target.Size = UDim2.new(0, 213, 0, 35)
-Target.Font = Enum.Font.GrenzeGotisch
-Target.Text = ""
-Target.TextColor3 = Color3.fromRGB(50, 0, 255)
-Target.TextSize = 20.000
-
-
-Damage.MouseButton1Click:Connect(function()
-	dmg = not dmg
-	local frame = Damage.Frame
-	if dmg then
-		frame:TweenSize(UDim2.new(0,30,0,30),Enum.EasingDirection.In,Enum.EasingStyle.Quad,0.1,true)
-	else
-		frame:TweenSize(UDim2.new(0,0,0,0),Enum.EasingDirection.In,Enum.EasingStyle.Quad,0.1,true)
-	end
-end)
-	
-Visualizer.MouseButton1Click:Connect(function()
-	visual = not visual
-	local frame = Visualizer.Frame
-	if visual then
-		frame:TweenSize(UDim2.new(0,30,0,30),Enum.EasingDirection.In,Enum.EasingStyle.Quad,0.1,true)
-	else
-		frame:TweenSize(UDim2.new(0,0,0,0),Enum.EasingDirection.In,Enum.EasingStyle.Quad,0.1,true)
-	end
-end)
-
-local i = 1
-	
-Shape.MouseButton1Click:Connect(function()
-	if i ~= 3 then
-		i = i + 1
-	else
-		i = 1
-	end
-	if i == 1 then
-		Shape.Text = "Ball"
-	elseif i == 2 then
-		Shape.Text = "Block"
-	elseif i == 3 then
-		Shape.Text = "Cylinder"
-	end
-end)
-
-chatbar.Focused:connect(function()
-    typing = true
-end)
-
-chatbar.FocusLost:connect(function()
-    typing = false
-end)
-
-game:GetService("UserInputService").InputBegan:connect(function(inp,gameProcessedEvent)
-	if gameProcessedEvent then return end
-	if not script then return end
-	if inp.KeyCode == Enum.KeyCode.T then
-        instalunge = not instalunge
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Keybinds";
+    Text = "size = e, add = j, subtract = k, vis = v";
+    Duration = 10;
+})
+---------------------------------------
+--notifications
+local is_on = function()
+    return visualizerEnabled and 'on' or 'off'
+end
+local mouse = game.Players.LocalPlayer:GetMouse()
+mouse.KeyDown:connect(function(key)
+    if key == turn_on_visualizer then
+        visualizerEnabled = not visualizerEnabled
+        if visualizerEnabled == true then
+            game:GetService("StarterGui"):SetCore('SendNotification', {Title = 'Danesploit 1.2.4', Text = 'Visualizer has been toggled on.'})
+            else
+            game:GetService("StarterGui"):SetCore('SendNotification', {Title = 'Danesploit 1.2.4', Text = 'Visualizer has been toggled off.'})
+        end
+    elseif key == check_reach_size then
+        local status = is_on()
+        game:GetService("StarterGui"):SetCore('SendNotification', {Title = 'Danesploit 1.2.4', Text = 'Exploit is '..status..'. Current: '..reach_size..' studs'})
+    elseif key == add_reach_value then
+        reach_size = reach_size + 0.5
+        game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Danesploit 1.2.4", Text = "Reach Strength has increased by 1. Current: " ..reach_size..' studs'})
+    elseif key == subtract_reach_value then
+        if reach_size > 0 then
+            reach_size = reach_size - 0.5
+            game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Danesploit 1.2.4", Text = "Reach Strength has decreased by 1. Current: " ..reach_size..' studs'})
+        else
+            game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Danesploit 1.2.4", Text = "Cannot decrease any further!"})
+        end
     end
-	if inp.KeyCode == Enum.KeyCode.R then
-		ScreenGui.Enabled = not ScreenGui.Enabled
-	elseif inp.KeyCode == Enum.KeyCode.E then
-        ac = not ac
-	end
 end)
-
-local function FTI(hit,handle)
-    local hum = hit.Parent:FindFirstChildOfClass("Humanoid")
-    if hum and hit.Parent.Name ~= game.Players.LocalPlayer.Character.Name then
-        for i,t in pairs(handle.Parent.Parent:GetChildren()) do
-            if t:IsA("Part") then
-                if t:FindFirstChildOfClass("TouchTransmitter") then
-                    if dmg then
-                        if lungeonly then
-                            if handle.Parent.GripUp ~= Vector3.new(-1,0,0) then return end
-                            for i,v in pairs(hit.Parent:GetChildren()) do
-                                if v:IsA("Part") then
-                                    firetouchinterest(v,t,0)
-                	                firetouchinterest(v,t,1)
-                                    firetouchinterest(v,handle,0)
-                	                firetouchinterest(v,handle,1)
-                                end
-                            end
-                        else
-                            for i,v in pairs(hit.Parent:GetChildren()) do
-                                if v:IsA("Part") then
-                                    firetouchinterest(v,t,0)
-                	                firetouchinterest(v,t,1)
-                                    firetouchinterest(v,handle,0)
-                	                firetouchinterest(v,handle,1)
-                                end
-                            end
-                        end
-                    else
-                        if lungeonly then
-                            if handle.Parent.GripUp ~= Vector3.new(-1,0,0) then return end
-                            local LArm = hit.Parent:FindFirstChild("Left Arm")
-                            if LArm then
-                                firetouchinterest(LArm,t,0)
-                    	        firetouchinterest(LArm,t,1)
-                                firetouchinterest(LArm,handle,0)
-                    	        firetouchinterest(LArm,handle,1)
-                    	    else
-                    	        firetouchinterest(hit,t,0)
-                	            firetouchinterest(hit,t,1)
-                    	        firetouchinterest(hit,handle,0)
-                	            firetouchinterest(hit,handle,1)
-                    	    end
-                        else
-                            local LArm = hit.Parent:FindFirstChild("Left Arm")
-                            if LArm then
-                                firetouchinterest(LArm,t,0)
-                    	        firetouchinterest(LArm,t,1)
-                                firetouchinterest(LArm,handle,0)
-                    	        firetouchinterest(LArm,handle,1)
-                    	    else
-                    	        firetouchinterest(hit,t,0)
-                	            firetouchinterest(hit,t,1)
-                    	        firetouchinterest(hit,handle,0)
-                	            firetouchinterest(hit,handle,1)
-                    	    end
-                    	end
-                    end
-                end
-            end
+-------------------------------------
+--function for FTI
+local function onHit(hit,handle)
+    if handle.Parent.Enabled == false then
+    local victim = hit.Parent:FindFirstChildOfClass("Humanoid")
+	    if victim and victim.Parent.Name ~= game.Players.LocalPlayer.Name then
+	        for _,v in pairs(hit.Parent:GetChildren()) do
+	            if v:IsA("BasePart") then
+	                if v.Name == "Torso" or v.Name == "Head" or v.Name == "Right Arm" or v.Name == "Left Arm" or v.Name == "Part" then
+	                   firetouchinterest(v,handle,0)
+	                end
+	            end
+			end
         end
     end
 end
 
-game:GetService("RunService").RenderStepped:Connect(function()
-    if not script then 
-        visualizer.Parent = nil 
-        return 
-    end
-    local tool = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
-    if not tool then 
-        visualizer.Parent = nil 
-    end
-    if tool then
-        if ac == true then
-            if typing == false then
-                tool:Activate()
-            end
-        end
-        local handle = tool:FindFirstChild("Handle") or tool:FindFirstChild("Part")
-        if handle then
-            for i,v in pairs(getconnections(handle.Touched)) do
-                v:Enable()
-            end
-            local slash = handle:FindFirstChild("Slash")
-            if slash then
-                if slash:IsA("Sound") then
-                    if instalunge then
-                        if slash.Playing == true then
-                            if not ac then
-                                tool:Activate()
-                            end
-                        end
-                    end
-                end
-            end
-            if Shape.Text == "Ball" then
-    			visualizer.Shape = Enum.PartType.Ball
-            elseif Shape.Text == "Block" then
-    			   visualizer.Shape = Enum.PartType.Block
-    		elseif Shape.Text == "Cylinder" then
-    			visualizer.Shape = Enum.PartType.Cylinder
-    		end
-            if visual then
-                visualizer.Parent = game.Workspace
-            else
-                visualizer.Parent = nil
-            end
-            local size = tonumber(Size.Text)
-            if size then
-                visualizer.Size = Vector3.new(size,size,size)
-    			visualizer.CFrame = handle.CFrame
-    			local target = string.lower(Target.Text)
-    			if target ~= "none" then
-    				for i,v in pairs(game.Teams:GetTeams()) do
-    				    local team = string.lower(v.Name)
-    				    if team:find(target) then
-    				        for i,p in pairs(game.Players:GetPlayers()) do
-    				            if p.Team == v then
-                                    local HRP = p.Character and p.Character:FindFirstChild("HumanoidRootPart")
-                                    if HRP then
-                                        local distance = (HRP.Position-handle.Position).Magnitude
-                                        if distance <= size and not typing then
-                                            FTI(HRP,handle)
-                                        end
-                                    end
-                                end
-    				        end
-    				    end
-    				end
-    			else
-                    for i,p in pairs(game.Players:GetPlayers()) do
-                        local HRP = p.Character and p.Character:FindFirstChild("HumanoidRootPart")
-                        if HRP then
-                            local distance = (HRP.Position-handle.Position).Magnitude
-                            if distance <= size then
-                                FTI(HRP,handle)
-                            end
-                        end
-                    end
-    			end
-            end
+game:GetService("RunService").RenderStepped:connect(function()
+	local s = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
+	if not s then Part.Parent = nil end
+	if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") == nil then
+	    Part.Parent = nil
+	end
+    if s then
+        local handle = s:FindFirstChild("Handle") or s:FindFirstChildOfClass("Part")
+		if handle then
+			if visualizerEnabled then
+				Part.Parent = handle
+			else
+				Part.Parent = nil
+			end
+			local reach = reach_size
+			if reach then
+					Part.Shape = Enum.PartType.Ball
+                    Part.Transparency = 1
+					Part.Size = Vector3.new(reach,reach,reach)
+					Part.CFrame = handle.CFrame
+					Part.CastShadow = false
+					Bolts.Size = NumberSequence.new(reach)
+					Bolts1.Size = NumberSequence.new(reach)
+					Bubble.Size = NumberSequence.new(reach)
+					Part.Name = math.random()
+					Part.Parent = handle
+		            for _,v in pairs(game.Players:GetPlayers()) do
+		                local hrp = v.Character and v.Character:FindFirstChild("HumanoidRootPart")
+		                if hrp and handle then
+		                    local mag = (hrp.Position-handle.Position).magnitude
+		                    if mag <= reach then
+		                 onHit(hrp,handle)
+		              end
+		           end
+				end
+			end
         end
     end
 end)
