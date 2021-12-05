@@ -1,5 +1,5 @@
 local plr = game.Players.LocalPlayer
 	
 		if plr.Character then
-			plr.Character:MoveTo(game:GetService("Workspace")["Prison_Cellblock"]["c_tables"].table2.Part.Position) 
+			plr.Character:MoveTo(game:GetService("Workspace")["Prison_Guard_Outpost"].floor.Position) 
 		end
